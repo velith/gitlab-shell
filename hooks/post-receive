@@ -10,8 +10,8 @@ repo_path = Dir.pwd
 # reset GL_ID env since we already got its value
 ENV['GL_ID'] = nil
 
-require_relative '../lib/gitlab_custom_hook'
-require_relative '../lib/gitlab_post_receive'
+require_relative '/opt/gitlab/embedded/service/gitlab-shell/lib/gitlab_custom_hook'
+require_relative '/opt/gitlab/embedded/service/gitlab-shell/lib/gitlab_post_receive'
 
 if GitlabPostReceive.new(repo_path, key_id, refs).exec &&
     GitlabCustomHook.new.post_receive(refs, repo_path)
