@@ -8,7 +8,7 @@ old_value = ARGV[1]
 new_value = ARGV[2]
 repo_path = Dir.pwd
 
-require_relative '../lib/gitlab_custom_hook'
+require_relative '/opt/gitlab/embedded/service/gitlab-shell/lib/gitlab_custom_hook'
 
 if GitlabCustomHook.new.update(ref_name, old_value, new_value, repo_path)
   exit 0

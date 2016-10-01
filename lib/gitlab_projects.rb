@@ -35,11 +35,11 @@ class GitlabProjects
         $logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
         FileUtils.mv(local_hooks_directory, "#{local_hooks_directory}.old.#{Time.now.to_i}")
       end
-      FileUtils.ln_sf(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
+      FileUtils.cp_r(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
     else
       $logger.info "Hooks already exist for #{path}."
-      true
     end
+    true
   end
 
   def initialize
@@ -151,6 +151,7 @@ class GitlabProjects
     $logger.info "Adding project #{@project_name} at <#{full_path}>."
     FileUtils.mkdir_p(full_path, mode: 0770)
     cmd = %W(git --git-dir=#{full_path} init --bare)
+    $logger.info "Adding bare git repository at #{full_path}."
     system(*cmd) && self.class.create_hooks(full_path)
   end
 
